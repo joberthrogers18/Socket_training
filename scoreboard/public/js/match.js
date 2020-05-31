@@ -1,17 +1,17 @@
 const videoTemplate = Handlebars.compile($("#video-template").html())
 const bidTemplate = Handlebars.compile($("#bid-template").html())
 $(function(){
-  
+
   const socket = io('', { query: { match: MATCH_INDEX }});
   socket.on('connect', function(){
     console.log('connected');
   })
   socket.on('score', function(score){
     console.log('score', score)
-    // na lista jogos
+    // in the list game
     $(".match-"+score.match+"-a").html(score.scoreA)
     $(".match-"+score.match+"-b").html(score.scoreB)
-    // atualizar o jogo
+    // update game
     if(MATCH_INDEX == score.match){
       $(".score-team-a").html(score.scoreA);
       $(".score-team-b").html(score.scoreB);
