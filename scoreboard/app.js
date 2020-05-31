@@ -4,9 +4,19 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
 
 var app = express();
+app.io = require('socket.io')();
+
+// Set up the database
+const adapter = new FileSync('data/db.json');
+const db = low(adapter);
+db.defaults(require('./data/default-data.json')).write();
+
+var indexRouter = require('./routes/index')({ io: app.io, db });
+var adminRouter = require('./routes/admin')({ io: app.io, db });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,6 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
