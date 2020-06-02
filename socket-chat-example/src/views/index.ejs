@@ -5,20 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Chat-socket-example</title>
-    <link rel="stylesheet" href="/css/index.css" type="text/css">
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script>
-      $(function () {
-        var socket = io();
-        $('form').submit(function(e) {
-          e.preventDefault();
-          socket.emit('chat-message', $('#m').val());
-          $('#m').val('');
-          return false;
-        })
-      })
-    </script>
+    <link rel="stylesheet" href="/css/index.css" type="text/css" />
   </head>
   <body>
     <ul id="messages"></ul>
@@ -26,5 +13,21 @@
       <input id="m" type="text" autocomplete="off" />
       <button>Send</button>
     </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+      $(function() {
+        var socket = io();
+        $("form").submit(function() {
+          socket.emit("chat message", $("#m").val());
+          $("#m").val("");
+          return false;
+        });
+        socket.on("chat message", function(msg) {
+          $("#messages").append($("<li>").text(msg));
+          window.scrollTo(0, document.body.scrollHeight);
+        });
+      });
+    </script>
   </body>
 </html>
