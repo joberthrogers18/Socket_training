@@ -1,17 +1,26 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import socketIo from "socket.io";
 
 import routes from "./routes";
 
 class App {
   public express: express.Application;
+  public io: socketIo.Server;
 
   public constructor() {
     this.express = express();
     this.middleware();
     this.database();
     this.routes();
+  }
+
+  public initializeSocket(io) {
+    this.express.use((req: express.Request, res: express.Response, next) => {
+      req.io = io;
+      return next();
+    });
   }
 
   private middleware(): void {
@@ -37,4 +46,4 @@ class App {
   }
 }
 
-export default new App().express;
+export default new App();
