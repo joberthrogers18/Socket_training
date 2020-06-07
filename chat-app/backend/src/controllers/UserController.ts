@@ -12,11 +12,13 @@ class UserController {
     try {
       // const user = await User.create(req.body);
 
-      const users = await User.find();
+      // const users = await User.find();
 
-      req.socket.emit("users", [users, { teste: "testeee"}]);
+      const io = req.app.get("io");
 
-      return res.json({ teste: "teste" });
+      io.emit("users", [{ teste: "testeee"}]);
+
+      return;
     } catch (err) {
       return res.json(err);
     }

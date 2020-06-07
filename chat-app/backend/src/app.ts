@@ -17,12 +17,12 @@ class App {
   }
 
   public initializeSocket(io: socketIo.Server) {
-    this.express.use((req: express.Request, res: express.Response, next) => {
-      console.log('passou');
-      console.log(io);
-      req.io = io;
-      return next();
-    });
+    // this.express.use((req: express.Request, res: express.Response, next) => {
+    //   console.log('passou');
+    //   console.log(io);
+    //   req.io = io;
+    //   return next();
+    // });
   }
 
   private middleware(): void {

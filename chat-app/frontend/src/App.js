@@ -18,6 +18,8 @@ function App() {
         console.log(data);
       });
 
+      io.emit("connectUser", "teste");
+
       console.log(io);
 
       const response = await api.get("/users");
