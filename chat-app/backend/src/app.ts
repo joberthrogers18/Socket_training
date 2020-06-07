@@ -16,8 +16,10 @@ class App {
     this.routes();
   }
 
-  public initializeSocket(io) {
+  public initializeSocket(io: socketIo.Server) {
     this.express.use((req: express.Request, res: express.Response, next) => {
+      console.log('passou');
+      console.log(io);
       req.io = io;
       return next();
     });
