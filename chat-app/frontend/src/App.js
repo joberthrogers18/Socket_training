@@ -1,36 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
-// import api from "./services/api";
-// import socket from "socket.io-client";
 
 import Routes from "./routes";
 
 function App() {
-  // const [users, setUsers] = useState([]);
-  // const [email, setEmail] = useState("");
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-
-  // useEffect(() => {
-  //   const loadUsers = async () => {
-  //     const io = socket.connect("http://localhost:33356");
-
-  //     io.on("users", (data) => {
-  //       console.log("passou");
-  //       console.log(data);
-  //     });
-
-  //     io.emit("connectUser", "teste");
-
-  //     console.log(io);
-
-  //     const response = await api.get("/users");
-  //     setUsers(response.data);
-  //   };
-
-  //   loadUsers();
-  // }, []);
-
   // const handlerCreate = async (event) => {
   //   event.preventDefault();
 
