@@ -4,4 +4,14 @@
   background-color: #1b262c;
   padding: 18px 25px;
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logout-btn {
+  cursor: pointer;
+  color: #fff;
+  text-decoration: underline;
+  font-size: 13px;
 }

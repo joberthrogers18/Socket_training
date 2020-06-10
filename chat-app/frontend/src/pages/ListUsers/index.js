@@ -6,7 +6,7 @@ import "./styles.css";
 
 import Navbar from "../../components/Navbars";
 
-function ListUsers() {
+function ListUsers(props) {
   const [users, setUsers] = useState([]);
   // const [email, setEmail] = useState("");
   // const [firstName, setFirstName] = useState("");
@@ -32,16 +32,16 @@ function ListUsers() {
   }, []);
 
   return (
-    <div class="list-users">
-      <Navbar />
+    <div className="list-users">
+      <Navbar propsNav={props} />
       <div className="list-user__wrapper-user">
         <div class="list-users__title">Lista de Usuários</div>
         <div className="list-users__list">
           <ul>
-            {users.map((user) => (
-              <li>
+            {users.map((user, index) => (
+              <li key={index}>
                 {`${user.firstName} ${user.lastName}`}
-                <div class="availability-user">Online</div>
+                <div className="availability-user">Online</div>
               </li>
             ))}
           </ul>
