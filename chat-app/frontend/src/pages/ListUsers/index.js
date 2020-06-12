@@ -20,13 +20,14 @@ function ListUsers(props) {
         setUsers([...users, newUserConnected]);
       });
 
-      io.on("disconnect", (data) => {
-        console.log(data);
+      io.on("disconnect-user", (idUser) => {
+        const newUsers = users.filter((user) => user._id !== idUser);
+        setUsers(newUsers);
       });
     };
 
     loadUsers();
-  }, []);
+  }, [users]);
 
   return (
     <div className="list-users">

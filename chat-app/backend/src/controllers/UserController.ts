@@ -41,6 +41,14 @@ class UserController {
       return res.json(err);
     }
   }
+
+  public async disconnectUser(req: Request, res: Response): Promise<Response> {
+    const { id } = req.query;
+    console.log(id);
+    const io = req.app.get("io");
+    io.emit("disconnect-user", id);
+    return res.json({ success: "Usuário desconectado!"});
+  }
 }
 
 export default new UserController();

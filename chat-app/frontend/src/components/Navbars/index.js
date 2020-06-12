@@ -1,10 +1,12 @@
 import React from "react";
 import "./styles.css";
+import api from "../../services/api";
 
 import { RiChatSmile3Line } from "react-icons/ri";
 
 function Navbar(props) {
-  const handlerLogout = () => {
+  const handlerLogout = async () => {
+    await api.get(`/users/disconnect?id=${localStorage.getItem("tokenId")}`);
     localStorage.clear();
     props.propsNav.history.push("/");
   };
