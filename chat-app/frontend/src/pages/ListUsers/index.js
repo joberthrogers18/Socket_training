@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import socket from "socket.io-client";
 
-import api from "../../services/api";
 import "./styles.css";
 
 import Navbar from "../../components/Navbars";
 
 function ListUsers(props) {
   const [users, setUsers] = useState([]);
+  const [mySocket, setMySocket] = useState(null);
   // const [email, setEmail] = useState("");
   // const [firstName, setFirstName] = useState("");
   // const [lastName, setLastName] = useState("");
@@ -15,6 +15,7 @@ function ListUsers(props) {
   useEffect(() => {
     const loadUsers = async () => {
       const io = socket.connect("http://localhost:33356");
+      setMySocket(io);
 
       io.on("login_user", (newUserConnected) => {
         setUsers([...users, newUserConnected]);
@@ -29,9 +30,15 @@ function ListUsers(props) {
     loadUsers();
   }, [users]);
 
+  useEffect(() => {
+    return () => {
+      console.log("cleaned up");
+    };
+  }, []);
+
   return (
     <div className="list-users">
-      <Navbar propsNav={props} />
+      <Navbar propsNav={props} io={mySocket} />
       <div className="list-user__wrapper-user">
         <div className="list-users__title">Lista de Usuários</div>
         <div className="list-users__list">
