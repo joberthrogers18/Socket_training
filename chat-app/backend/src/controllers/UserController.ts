@@ -1,24 +1,27 @@
 import { Request, Response } from "express";
 
-import User, {UserInterface} from "../schemas/User";
+import User, { UserInterface } from "../schemas/User";
 
 class UserController {
   public async index(req: Request, res: Response): Promise<Response> {
     try {
       const query_data = { email: String(req.query.email) };
       const user: UserInterface = await User.findOne(query_data);
+
+      const io = req.app.get("io");
+      io.emit("login_user", user);
+
       return res.json(user);
-    } catch(err) {
+    } catch (err) {
       return res.status(400).json(err);
     }
-
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
     try {
       const users = await User.find();
       return res.json(users);
-    } catch(err) {
+    } catch (err) {
       return res.status(400).json(err);
     }
   }

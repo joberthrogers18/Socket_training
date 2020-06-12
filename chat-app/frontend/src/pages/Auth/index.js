@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { RiChatSmile3Line } from "react-icons/ri";
+
 import "./styles.css";
 
 import api from "../../services/api";
@@ -30,7 +32,10 @@ function Auth(props) {
   return (
     <div className="auth">
       <div className="auth-wrapper">
-        <div className="top-title">ChatApp</div>
+        <div className="top-title">
+          <RiChatSmile3Line size="1.2em" />
+          <span>ChatApp</span>
+        </div>
         <div className="title-auth">Login</div>
         {showError ? (
           <div className="error-auth">

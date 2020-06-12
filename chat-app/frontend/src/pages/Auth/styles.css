@@ -28,6 +28,10 @@
   border-top-right-radius: 20px;
 }
 
+.top-title span {
+  margin-left: 10px;
+}
+
 .auth-content {
   flex: 9;
   display: flex;

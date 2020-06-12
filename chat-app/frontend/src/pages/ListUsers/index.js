@@ -16,18 +16,15 @@ function ListUsers(props) {
     const loadUsers = async () => {
       const io = socket.connect("http://localhost:33356");
 
-      io.on("users", (data) => {
-        console.log("passou");
-        console.log(data);
+      io.on("login_user", (newUserConnected) => {
+        setUsers([...users, newUserConnected]);
       });
 
-      io.emit("connectUser", "teste");
-
-      console.log(io);
-
-      const response = await api.get("/users");
-      setUsers(response.data);
+      io.on("disconnect", (data) => {
+        console.log(data);
+      });
     };
+
     loadUsers();
   }, []);
 
@@ -35,7 +32,7 @@ function ListUsers(props) {
     <div className="list-users">
       <Navbar propsNav={props} />
       <div className="list-user__wrapper-user">
-        <div class="list-users__title">Lista de Usuários</div>
+        <div className="list-users__title">Lista de Usuários</div>
         <div className="list-users__list">
           <ul>
             {users.map((user, index) => (
