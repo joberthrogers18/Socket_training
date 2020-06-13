@@ -10,7 +10,6 @@ import Auth from "./pages/Auth";
 import ListUsers from "./pages/ListUsers";
 import Chat from "./pages/Chat";
 import NotFound from "./components/NotFound";
-import { useEffect } from "react";
 
 export default function Routes() {
   const PrivateRoutes = ({ component: Component, ...rest }) => (
