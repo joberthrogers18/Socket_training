@@ -10,6 +10,7 @@ import Navbar from "../../components/Navbars";
 function ListUsers(props) {
   const [users, setUsers] = useState([]);
   const [mySocket, setMySocket] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState([]);
   // const [email, setEmail] = useState("");
   // const [firstName, setFirstName] = useState("");
   // const [lastName, setLastName] = useState("");
@@ -24,32 +25,42 @@ function ListUsers(props) {
       });
 
       io.on("login_user", (newUserConnected) => {
-        setUsers([...users, newUserConnected]);
+        if (newUserConnected) {
+          console.log(newUserConnected);
+          setOnlineUsers([...onlineUsers, newUserConnected._id]);
+        }
       });
 
       io.on("disconnect-user", (idUser) => {
-        const newUsers = users.filter((user) => user._id !== idUser);
-        setUsers(newUsers);
+        console.log(idUser);
+        const newUsers = onlineUsers.filter((user) => user !== idUser);
+        setOnlineUsers(newUsers);
       });
     };
 
     loadDependences();
-  }, [users]);
+  }, [users, onlineUsers]);
 
   useEffect(() => {
     const loadUsers = async () => {
       const response = await api.get("/users");
-      setUsers(response.data);
+      if (response.data) {
+        const tokenId = localStorage.getItem("tokenId");
+        const filteredUsers = response.data.filter(
+          (user) => user._id !== tokenId
+        );
+        setUsers(filteredUsers);
+      }
     };
 
     loadUsers();
   }, []);
 
-  useEffect(() => {
-    return () => {
-      console.log("cleaned up");
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     console.log("cleaned up");
+  //   };
+  // }, []);
 
   return (
     <div className="list-users">
@@ -67,7 +78,11 @@ function ListUsers(props) {
               {users.map((user, index) => (
                 <li key={index}>
                   {`${user.firstName} ${user.lastName}`}
-                  <div className="availability-user">Online</div>
+                  {onlineUsers.includes(user._id) ? (
+                    <div className="availability-user">Online</div>
+                  ) : (
+                    <></>
+                  )}
                 </li>
               ))}
             </ul>

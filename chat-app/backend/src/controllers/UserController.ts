@@ -20,6 +20,7 @@ class UserController {
   public async show(req: Request, res: Response): Promise<Response> {
     try {
       const users = await User.find();
+
       return res.json(users);
     } catch (err) {
       return res.status(400).json(err);
@@ -30,11 +31,10 @@ class UserController {
     try {
       const user = await User.create(req.body);
 
-      // const users = await User.find();
+      const users = await User.find();
 
       // const io = req.app.get("io");
-
-      // io.emit("users", [{ teste: "testeee" }]);
+      // io.emit("add-user", users);
 
       return res.json(user);
     } catch (err) {
@@ -44,7 +44,6 @@ class UserController {
 
   public async disconnectUser(req: Request, res: Response): Promise<Response> {
     const { id } = req.query;
-    console.log(id);
     const io = req.app.get("io");
     io.emit("disconnect-user", id);
     return res.json({ success: "Usuário desconectado!"});

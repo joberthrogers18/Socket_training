@@ -9,9 +9,9 @@ const socketSetup = io(httpServer);
 app.express.set("io", socketSetup);
 
 socketSetup.on("connection", socket => {
-  console.log("Conectado");
-  socket.on("connectUser", data => {
-    console.log(data);
+  console.log('User connected');
+  socket.on("sendMessage", (id, msg) => {
+    socket.to(id).emit('myMessage', msg);
   })
 });
 
