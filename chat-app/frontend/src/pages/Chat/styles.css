@@ -62,7 +62,7 @@
 
 .message-wrapper {
   width: 60%;
-  background-color: #e1d1d1;
+  background-color: #bbe1fa;
   border: 0.3px solid #3333;
   padding: 10px;
   border-radius: 10px;
@@ -87,6 +87,6 @@
   margin-top: 10px;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 20px solid #e1d1d1;
+  border-bottom: 20px solid #bbe1fa;
   transform: rotate(90deg);
 }

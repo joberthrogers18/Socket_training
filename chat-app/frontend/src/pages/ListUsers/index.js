@@ -56,6 +56,13 @@ function ListUsers(props) {
     loadUsers();
   }, []);
 
+  const chooseUser = () => {
+    props.history.push({
+      pathname: "/chat/1",
+      io: mySocket,
+    });
+  };
+
   // useEffect(() => {
   //   return () => {
   //     console.log("cleaned up");
@@ -76,7 +83,7 @@ function ListUsers(props) {
           ) : (
             <ul>
               {users.map((user, index) => (
-                <li key={index}>
+                <li onClick={() => chooseUser()} key={index}>
                   {`${user.firstName} ${user.lastName}`}
                   {onlineUsers.includes(user._id) ? (
                     <div className="availability-user">Online</div>

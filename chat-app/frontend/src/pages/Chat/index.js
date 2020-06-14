@@ -4,7 +4,7 @@ import { MdSend } from "react-icons/md";
 import "./styles.css";
 import Navbar from "../../components/Navbars";
 
-function Chat() {
+function Chat(props) {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -14,7 +14,7 @@ function Chat() {
 
   return (
     <>
-      <Navbar />
+      <Navbar propsNav={props} io={props.location.io} />
       <div className="chat">
         <div className="wrapper-chat">
           <div className="content">
