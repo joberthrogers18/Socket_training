@@ -3,14 +3,31 @@ import { MdSend } from "react-icons/md";
 
 import "./styles.css";
 import Navbar from "../../components/Navbars";
+import api from "../../services/api";
 
 function Chat(props) {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const messageContent = document.getElementById("content-wrapper");
-    messageContent.scrollTop = messageContent.scrollHeight;
+    const loadDependencies = () => {
+      const messageContent = document.getElementById("content-wrapper");
+      messageContent.scrollTop = messageContent.scrollHeight;
+      // await api.get("/join-room/" + props.match.params.id);
+      props.location.io.emit("join-room", props.match.params.id);
+
+      props.location.io.on("send-message", (msg) => {
+        console.log(msg);
+      });
+    };
+
+    loadDependencies();
   }, []);
+
+  const handlerMessage = async () => {
+    await api.post(`/send-message/${props.match.params.id}`, {
+      message,
+    });
+  };
 
   return (
     <>
@@ -112,7 +129,7 @@ function Chat(props) {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
-            <button>
+            <button onClick={() => handlerMessage()}>
               <MdSend color="#FFF" size="1.2em" />
             </button>
           </div>

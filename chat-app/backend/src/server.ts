@@ -13,6 +13,10 @@ socketSetup.on("connection", socket => {
   // socket.on("sendMessage", (id, msg) => {
   //   socket.to(id).emit('myMessage', msg);
   // })
+  socket.on("join-room", id => {
+    socket.join("room-" + id);
+    console.log(socket.adapter.rooms);
+  })
 });
 
 const PORT = process.env.PORT || 33356;
