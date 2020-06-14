@@ -24,6 +24,11 @@
   overflow: auto;
 }
 
+#content-wrapper {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .wrapper-chat .inputs {
   flex: 1;
   display: flex;
