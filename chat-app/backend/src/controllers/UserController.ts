@@ -51,9 +51,9 @@ class UserController {
 
   public async sendMessage(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { message } = req.body;
+    const { messages } = req.body;
     const io = req.app.get("io");
-    io.to("room-" + id).emit("send-message", message);
+    io.to("room-" + id).emit("send-message", messages);
     return res.status(204).json({});
   }
 

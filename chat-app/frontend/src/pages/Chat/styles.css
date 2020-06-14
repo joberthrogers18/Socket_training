@@ -62,6 +62,7 @@
 
 .message-wrapper {
   width: 60%;
+  min-width: 50vw;
   background-color: #bbe1fa;
   border: 0.3px solid #3333;
   padding: 10px;

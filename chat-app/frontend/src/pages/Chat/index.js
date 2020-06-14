@@ -6,17 +6,17 @@ import Navbar from "../../components/Navbars";
 import api from "../../services/api";
 
 function Chat(props) {
+  const [messagesChat, setMessagesChat] = useState([]);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
     const loadDependencies = () => {
       const messageContent = document.getElementById("content-wrapper");
       messageContent.scrollTop = messageContent.scrollHeight;
-      // await api.get("/join-room/" + props.match.params.id);
       props.location.io.emit("join-room", props.match.params.id);
 
-      props.location.io.on("send-message", (msg) => {
-        console.log(msg);
+      props.location.io.on("send-message", (msgs) => {
+        setMessagesChat(msgs);
       });
     };
 
@@ -24,9 +24,11 @@ function Chat(props) {
   }, []);
 
   const handlerMessage = async () => {
+    const messages = [...messagesChat, message];
     await api.post(`/send-message/${props.match.params.id}`, {
-      message,
+      messages,
     });
+    setMessage("");
   };
 
   return (
@@ -36,90 +38,15 @@ function Chat(props) {
         <div className="wrapper-chat">
           <div className="content">
             <div id="content-wrapper">
-              <div className="position-message">
-                <div className="message-wrapper">
-                  <div className="user-name">Joberth Rogers</div>
-                  <div className="message-content">
-                    Many desktop publishing packages and web page editors now
-                    use Lorem Ipsum as their default model text, and a search
-                    for 'lorem ipsum' will uncover many web sites still in their
-                    infancy. Various versions have evolved over the years,
-                    sometimes by accident, sometimes on purpose (injected humour
-                    and the like).
+              {messagesChat.map((msg, index) => (
+                <div key={index} className="position-message">
+                  <div className="message-wrapper">
+                    <div className="user-name">Joberth Rogers</div>
+                    <div className="message-content">{msg}</div>
                   </div>
+                  <div className="decoration-message"></div>
                 </div>
-                <div className="decoration-message"></div>
-              </div>
-              <div className="position-message">
-                <div className="message-wrapper">
-                  <div className="user-name">Joberth Rogers</div>
-                  <div className="message-content">
-                    Many desktop publishing packages and web page editors now
-                    use Lorem Ipsum as their default model text, and a search
-                    for 'lorem ipsum' will uncover many web sites still in their
-                    infancy. Various versions have evolved over the years,
-                    sometimes by accident, sometimes on purpose (injected humour
-                    and the like).
-                  </div>
-                </div>
-                <div className="decoration-message"></div>
-              </div>
-              <div className="position-message">
-                <div className="message-wrapper">
-                  <div className="user-name">Joberth Rogers</div>
-                  <div className="message-content">
-                    Many desktop publishing packages and web page editors now
-                    use Lorem Ipsum as their default model text, and a search
-                    for 'lorem ipsum' will uncover many web sites still in their
-                    infancy. Various versions have evolved over the years,
-                    sometimes by accident, sometimes on purpose (injected humour
-                    and the like).
-                  </div>
-                </div>
-                <div className="decoration-message"></div>
-              </div>
-              <div className="position-message">
-                <div className="message-wrapper">
-                  <div className="user-name">Joberth Rogers</div>
-                  <div className="message-content">
-                    Many desktop publishing packages and web page editors now
-                    use Lorem Ipsum as their default model text, and a search
-                    for 'lorem ipsum' will uncover many web sites still in their
-                    infancy. Various versions have evolved over the years,
-                    sometimes by accident, sometimes on purpose (injected humour
-                    and the like).
-                  </div>
-                </div>
-                <div className="decoration-message"></div>
-              </div>
-              <div className="position-message">
-                <div className="message-wrapper">
-                  <div className="user-name">Joberth Rogers</div>
-                  <div className="message-content">
-                    Many desktop publishing packages and web page editors now
-                    use Lorem Ipsum as their default model text, and a search
-                    for 'lorem ipsum' will uncover many web sites still in their
-                    infancy. Various versions have evolved over the years,
-                    sometimes by accident, sometimes on purpose (injected humour
-                    and the like).
-                  </div>
-                </div>
-                <div className="decoration-message"></div>
-              </div>
-              <div className="position-message">
-                <div className="message-wrapper">
-                  <div className="user-name">Joberth Rogers</div>
-                  <div className="message-content">
-                    Many desktop publishing packages and web page editors now
-                    use Lorem Ipsum as their default model text, and a search
-                    for 'lorem ipsum' will uncover many web sites still in their
-                    infancy. Various versions have evolved over the years,
-                    sometimes by accident, sometimes on purpose (injected humour
-                    and the like).
-                  </div>
-                </div>
-                <div className="decoration-message"></div>
-              </div>
+              ))}
             </div>
           </div>
           <div className="inputs">
