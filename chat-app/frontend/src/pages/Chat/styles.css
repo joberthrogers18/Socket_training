@@ -1,0 +1,50 @@
+.chat {
+  width: 100%;
+  height: calc(100vh - 57px);
+  background-color: #3282b8;
+  padding: 20px;
+}
+
+.wrapper-chat {
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper-chat .content {
+  flex: 14;
+}
+
+.wrapper-chat .inputs {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1b262c;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.inputs input {
+  width: 80%;
+  border: none;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  outline: none;
+  padding-left: 10px;
+  height: 25px;
+  background-color: #f7f7f7;
+}
+
+.inputs button:last-of-type {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  height: 25px;
+  background-color: #3282b8;
+  border: none;
+  width: 50px;
+  cursor: pointer;
+}
