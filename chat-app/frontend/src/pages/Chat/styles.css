@@ -16,6 +16,12 @@
 
 .wrapper-chat .content {
   flex: 14;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
+  overflow: auto;
 }
 
 .wrapper-chat .inputs {
@@ -47,4 +53,35 @@
   border: none;
   width: 50px;
   cursor: pointer;
+}
+
+.message-wrapper {
+  width: 60%;
+  background-color: #e1d1d1;
+  border: 0.3px solid #3333;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.message-content {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 300;
+  text-align: justify;
+}
+
+.position-message {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.decoration-message {
+  width: 0;
+  height: 0;
+  margin-top: 10px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 20px solid #e1d1d1;
+  transform: rotate(90deg);
 }

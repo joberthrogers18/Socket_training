@@ -10,9 +10,9 @@ app.express.set("io", socketSetup);
 
 socketSetup.on("connection", socket => {
   console.log('User connected');
-  socket.on("sendMessage", (id, msg) => {
-    socket.to(id).emit('myMessage', msg);
-  })
+  // socket.on("sendMessage", (id, msg) => {
+  //   socket.to(id).emit('myMessage', msg);
+  // })
 });
 
 const PORT = process.env.PORT || 33356;

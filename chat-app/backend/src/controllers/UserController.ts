@@ -46,7 +46,15 @@ class UserController {
     const { id } = req.query;
     const io = req.app.get("io");
     io.emit("disconnect-user", id);
-    return res.json({ success: "Usuário desconectado!"});
+    return res.json({ success: "Usuário desconectado!" });
+  }
+
+  public async sendMessage(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const { message } = req.body;
+    const io = req.app.get("io");
+    io.to(id).emit("send-message", message);
+    return res.status(204).json({});
   }
 }
 
