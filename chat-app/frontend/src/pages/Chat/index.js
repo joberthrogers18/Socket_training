@@ -24,7 +24,15 @@ function Chat(props) {
   }, []);
 
   const handlerMessage = async () => {
-    const messages = [...messagesChat, message];
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+    const messages = [
+      ...messagesChat,
+      {
+        message,
+        username: user.firstName + " " + user.lastName,
+      },
+    ];
+
     await api.post(`/send-message/${props.match.params.id}`, {
       messages,
     });
@@ -41,8 +49,8 @@ function Chat(props) {
               {messagesChat.map((msg, index) => (
                 <div key={index} className="position-message">
                   <div className="message-wrapper">
-                    <div className="user-name">Joberth Rogers</div>
-                    <div className="message-content">{msg}</div>
+                    <div className="user-name">{msg.username}</div>
+                    <div className="message-content">{msg.message}</div>
                   </div>
                   <div className="decoration-message"></div>
                 </div>

@@ -22,6 +22,7 @@ function Auth(props) {
       }
 
       localStorage.setItem("tokenId", response.data._id);
+      localStorage.setItem("userInfo", JSON.stringify(response.data));
 
       return props.history.push("/users");
     } catch (err) {

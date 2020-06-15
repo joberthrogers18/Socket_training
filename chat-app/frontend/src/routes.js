@@ -25,10 +25,23 @@ export default function Routes() {
     />
   );
 
+  const LoggedRoute = ({ component: Component, ...rest }) => (
+    <Route
+      {...rest}
+      render={(props) =>
+        !localStorage.getItem("tokenId") ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/users" />
+        )
+      }
+    />
+  );
+
   return (
     <Router>
       <Switch>
-        <Route path="/" exact component={Auth} />
+        <LoggedRoute path="/" exact component={Auth} />
         <PrivateRoutes path="/users" component={ListUsers} />
         <PrivateRoutes path="/chat/:id" component={Chat} />
         <Route component={NotFound} />
