@@ -8,6 +8,10 @@ import api from "../../services/api";
 function Auth(props) {
   const [email, setEmail] = useState("");
   const [showError, setShowError] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [errorDisplay, setErrorDisplay] = useState("");
 
   const handlerLogin = async () => {
     try {
@@ -15,9 +19,11 @@ function Auth(props) {
 
       if (!response.data) {
         setShowError(true);
+        setErrorDisplay("Não existe usuário com este email ainda!");
 
         return setTimeout(() => {
           setShowError(false);
+          setErrorDisplay("");
         }, 2000);
       }
 
@@ -30,6 +36,30 @@ function Auth(props) {
     }
   };
 
+  const handleSignUp = async () => {
+    try {
+      const response = await api.post("/users", {
+        email,
+        firstName,
+        lastName,
+      })
+
+      if (!response.data) {
+        setShowError(true);
+        setErrorDisplay("Erro ao cadastrar, tente novamente mais tarde");
+
+        return setTimeout(() => {
+          setShowError(false);
+          setErrorDisplay("");
+        }, 2000);
+      }
+
+      return props.history.push("/");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="auth">
       <div className="auth-wrapper">
@@ -40,23 +70,68 @@ function Auth(props) {
         <div className="title-auth">Login</div>
         {showError ? (
           <div className="error-auth">
-            Não existe usuário com este email ainda!
+            {errorDisplay}
           </div>
         ) : (
           <></>
         )}
         <div className="auth-content">
           <div className="auth-inputs">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            {
+              isSignUp ? (
+                <>
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <label htmlFor="first-name">Primeiro Nome</label>
+                  <input
+                    type="text"
+                    id="first-name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                  <label htmlFor="last-name">Last Name</label>
+                  <input
+                    type="text"
+                    id="last-name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </>
+              ) : (
+                <>
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </>
+              )
+            }
           </div>
           <div className="auth-btn">
-            <button onClick={() => handlerLogin()}>Entrar</button>
+            {
+              isSignUp ? (
+                <button onClick={() => handleSignUp()}>Cadastrar</button>
+              ) : (
+                <button onClick={() => handlerLogin()}>Entrar</button>
+              )
+            }
+          </div>
+          <div onClick={() => setIsSignUp(!isSignUp)} className="link-signup">
+            {
+              isSignUp ? (
+                'Já tenho conta'
+              ) : (
+                'Deseja cadastrar?'
+              )
+            }
           </div>
         </div>
       </div>
