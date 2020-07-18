@@ -12,7 +12,7 @@ import { ChatContext } from "../../utils/context";
 
 
 function ListUsers(props) {
-  const { setMySocket, setOnlineUsers, onlineUsers, users, setUsers, mySocket } = useContext(ChatContext)
+  const { onlineUsers, users, setUsers, mySocket } = useContext(ChatContext)
 
   useEffect(() => {
     const loadUsers = async () => {

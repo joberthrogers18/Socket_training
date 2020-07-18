@@ -1,22 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { MdSend } from "react-icons/md";
 
 import "./styles.css";
 import Navbar from "../../components/Navbars";
 import api from "../../services/api";
+import { ChatContext } from "../../utils/context";
 
 function Chat(props) {
+  const { mySocket } = useContext(ChatContext);
+  // const [io, setIo] = useState(null);
   const [messagesChat, setMessagesChat] = useState([]);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
     const loadDependencies = () => {
-      console.log(props);
       const messageContent = document.getElementById("content-wrapper");
       messageContent.scrollTop = messageContent.scrollHeight;
-      props.location.io.emit("join-room", props.match.params.id);
+      mySocket.emit("join-room", props.match.params.id);
 
-      props.location.io.on("send-message", (msgs) => {
+      mySocket.on("send-message", (msgs) => {
         setMessagesChat(msgs);
       });
     };

@@ -14,7 +14,6 @@ function Auth(props) {
   const [errorDisplay, setErrorDisplay] = useState("");
 
   const handlerLogin = async () => {
-    console.log('passou');
     try {
       const response = await api.get(`/user?email=${email}`);
       if (!response.data) {
