@@ -4,6 +4,7 @@ import User, { UserInterface } from "../schemas/User";
 
 class UserController {
   public async index(req: Request, res: Response): Promise<Response> {
+    console.log("passou");
     try {
       const query_data = { email: String(req.query.email) };
       const user: UserInterface = await User.findOne(query_data);
@@ -18,6 +19,7 @@ class UserController {
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
+    console.log("passou");
     try {
       const users = await User.find();
 

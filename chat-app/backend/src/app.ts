@@ -32,12 +32,13 @@ class App {
 
   private database(): void {
     mongoose.connect(
-      "mongodb://localhost:27017/tsnode",
+      process.env.DATABASE_URL,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       },
-      () => {
+      (err) => {
+        if (err) throw err;
         console.log("Database is connected!");
       }
     );

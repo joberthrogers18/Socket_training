@@ -1,15 +1,19 @@
-version: "2"
+version: '3'
 services:
     app:
         container_name: backend_chat
-        build: .
+        environment:
+            - DATABASE_URL=mongodb://mongo/tsnode
+        build:
+            context: .
+            dockerfile: Dockerfile
         ports:
             - "33356:33356"
-        volumes:
-            - .:/app
         depends_on: 
             - mongo
+        volumes:
+            - .:/app
+            - /app/node_modules
     mongo:
+        container_name: mongo
         image: mongo
-        ports:
-            - "27017:27017"
