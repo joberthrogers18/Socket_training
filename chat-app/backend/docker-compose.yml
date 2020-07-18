@@ -1,0 +1,15 @@
+version: "2"
+services:
+    app:
+        container_name: backend_chat
+        build: .
+        ports:
+            - "33356:33356"
+        volumes:
+            - .:/app
+        depends_on: 
+            - mongo
+    mongo:
+        image: mongo
+        ports:
+            - "27017:27017"
