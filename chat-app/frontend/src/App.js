@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 
 import Routes from "./routes";
+import { ChatProvider } from "./utils/context";
 
 function App() {
   // const handlerCreate = async (event) => {
@@ -24,7 +25,9 @@ function App() {
 
   return (
     <div className="app">
-      <Routes />
+      <ChatProvider>
+        <Routes />
+      </ChatProvider>
       {/* <h1>Usuários</h1>
       {users.map((user) => (
         <h3 key={user._id}>{`${user.firstName} ${user.lastName}`}</h3>

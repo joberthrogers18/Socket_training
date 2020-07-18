@@ -11,6 +11,7 @@ function Chat(props) {
 
   useEffect(() => {
     const loadDependencies = () => {
+      console.log(props);
       const messageContent = document.getElementById("content-wrapper");
       messageContent.scrollTop = messageContent.scrollHeight;
       props.location.io.emit("join-room", props.match.params.id);
