@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles.css";
 import api from "../../services/api";
+import { Link } from "react-router-dom";
 
 import { RiChatSmile3Line } from "react-icons/ri";
 
@@ -16,10 +17,12 @@ function Navbar(props) {
 
   return (
     <div className="navbar">
-      <div className="logo-nav">
-        <RiChatSmile3Line size="1.2em" />
-        <span>Chat-app</span>
-      </div>
+      <Link to="/">
+        <div className="logo-nav">
+          <RiChatSmile3Line size="1.2em" />
+          <span>Chat-app</span>
+        </div>
+      </Link>
       <div onClick={() => handlerLogout()} className="logout-btn">
         Logout
       </div>

@@ -14,9 +14,9 @@ function Auth(props) {
   const [errorDisplay, setErrorDisplay] = useState("");
 
   const handlerLogin = async () => {
+    console.log('passou');
     try {
       const response = await api.get(`/user?email=${email}`);
-
       if (!response.data) {
         setShowError(true);
         setErrorDisplay("Não existe usuário com este email ainda!");
@@ -54,7 +54,7 @@ function Auth(props) {
         }, 2000);
       }
 
-      return props.history.push("/");
+      setIsSignUp(!isSignUp);
     } catch (err) {
       console.log(err);
     }
