@@ -35,7 +35,7 @@ export const ChatProvider = (props) => {
   }, [users, onlineUsers]);
 
   return (
-    <ChatContext.Provider value={{mySocket, users, setUsers, onlineUsers, setOnlineUsers}}>
+    <ChatContext.Provider value={{mySocket, users, setUsers, onlineUsers, setOnlineUsers, setMySocket}}>
       {props.children}
     </ChatContext.Provider>
   );
