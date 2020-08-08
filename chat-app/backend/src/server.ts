@@ -8,15 +8,14 @@ const socketSetup = io(httpServer);
 
 app.express.set("io", socketSetup);
 
-socketSetup.on("connection", socket => {
-  console.log('User connected');
+socketSetup.on("connection", (socket) => {
+  console.log("User connected");
   // socket.on("sendMessage", (id, msg) => {
   //   socket.to(id).emit('myMessage', msg);
   // })
-  socket.on("join-room", id => {
+  socket.on("join-room", (id) => {
     socket.join("room-" + id);
-    console.log(socket.adapter.rooms);
-  })
+  });
 });
 
 const PORT = process.env.PORT || 33356;
