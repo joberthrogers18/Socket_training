@@ -29,9 +29,10 @@ function ListUsers(props) {
     loadUsers();
   }, []);
 
-  const chooseUser = () => {
+  const chooseUser = (idUser) => {
+    const myId = localStorage.getItem('tokenId')
     props.history.push({
-      pathname: "/chat/1",
+      pathname: `/chat/${myId}-${idUser}`,
       io: mySocket,
     });
   };
@@ -56,7 +57,7 @@ function ListUsers(props) {
           ) : (
             <ul>
               {users.map((user, index) => (
-                <li onClick={() => chooseUser()} key={index}>
+                <li onClick={() => chooseUser(user._id)} key={index}>
                   {`${user.firstName} ${user.lastName}`}
                   {onlineUsers.includes(user._id) ? (
                     <div className="availability-user">Online</div>

@@ -11,12 +11,20 @@ function Chat(props) {
   // const [io, setIo] = useState(null);
   const [messagesChat, setMessagesChat] = useState([]);
   const [message, setMessage] = useState("");
+  const [roomName, setRoom] = useState("");
 
   useEffect(() => {
     const loadDependencies = () => {
+      const [myId, userChat] = props.match.params.id.split('-');
       const messageContent = document.getElementById("content-wrapper");
       messageContent.scrollTop = messageContent.scrollHeight;
-      mySocket.emit("join-room", props.match.params.id);
+
+      const userChatParser = parseInt(Number("0x" + userChat.slice(0, 5)));
+      const myIdParser = parseInt(Number("0x" + myId.slice(0, 5)));
+      const formatNameRoom = myIdParser < userChatParser ? `${myIdParser}${userChatParser}` : `${userChatParser}${myIdParser}`;
+      setRoom(formatNameRoom);
+      
+      mySocket.emit("join-room", roomName);
 
       mySocket.on("send-message", (msgs) => {
         setMessagesChat(msgs);
@@ -24,7 +32,7 @@ function Chat(props) {
     };
 
     loadDependencies();
-  }, []);
+  }, [roomName]);
 
   const handlerMessage = async () => {
     const user = JSON.parse(localStorage.getItem("userInfo"));
@@ -36,7 +44,8 @@ function Chat(props) {
       },
     ];
 
-    await api.post(`/send-message/${props.match.params.id}`, {
+    console.log(roomName);
+    await api.post(`/send-message/${roomName}`, {
       messages,
     });
     setMessage("");
