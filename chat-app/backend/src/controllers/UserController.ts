@@ -54,6 +54,7 @@ class UserController {
 
   public async sendMessage(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
+    const { senderId } = req.query;
     const { messages } = req.body;
     const io = req.app.get("io");
 
@@ -65,11 +66,12 @@ class UserController {
     );
 
     if (!chat) {
-      console.log("passou");
       await Chats.create({ room: id, messages });
     }
 
     io.to("room-" + id).emit("send-message", messages);
+    io.emit("message-send-to", senderId);
+
     return res.status(204).json({});
   }
 
