@@ -10,9 +10,7 @@ app.express.set("io", socketSetup);
 
 socketSetup.on("connection", (socket) => {
   console.log("User connected");
-  // socket.on("sendMessage", (id, msg) => {
-  //   socket.to(id).emit('myMessage', msg);
-  // })
+
   socket.on("join-room", (id) => {
     socket.join("room-" + id);
   });

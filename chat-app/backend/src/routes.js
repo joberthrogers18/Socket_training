@@ -10,5 +10,6 @@ routes.post("/users", UserController.create);
 routes.get("/users/disconnect", UserController.disconnectUser);
 routes.post("/send-message/:id", UserController.sendMessage);
 routes.get("/join-room/:id", UserController.joinRoom);
+routes.get("/load-messages/:room", UserController.loadMessages);
 
 export default routes;
