@@ -12,7 +12,7 @@ import { ChatContext } from "../../utils/context";
 
 
 function ListUsers(props) {
-  const { onlineUsers, users, setUsers, mySocket } = useContext(ChatContext)
+  const { onlineUsers, users, setUsers, mySocket, usersNotify, setUserNotify } = useContext(ChatContext)
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -31,6 +31,7 @@ function ListUsers(props) {
 
   const chooseUser = (idUser) => {
     const myId = localStorage.getItem('tokenId')
+    setUserNotify(usersNotify.filter(currentUsers => currentUsers !== idUser));
     props.history.push({
       pathname: `/chat/${myId}-${idUser}`,
       io: mySocket,
@@ -59,11 +60,18 @@ function ListUsers(props) {
               {users.map((user, index) => (
                 <li onClick={() => chooseUser(user._id)} key={index}>
                   {`${user.firstName} ${user.lastName}`}
-                  {onlineUsers.includes(user._id) ? (
-                    <div className="availability-user">Online</div>
-                  ) : (
-                    <></>
-                  )}
+                  <div className="wrapper-notification">
+                    {onlineUsers.includes(user._id) ? (
+                      <div className="availability-user">Online</div>
+                    ) : (
+                      <></>
+                    )}
+                    {usersNotify.includes(user._id) ? (
+                      <div className="notify">!</div>
+                    ): (
+                      <></>
+                    )}
+                  </div>
                 </li>
               ))}
             </ul>

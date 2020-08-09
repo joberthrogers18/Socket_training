@@ -7,6 +7,7 @@ export const ChatProvider = (props) => {
   // const [mySocket, setMySocket] = useState();
   const [users, setUsers] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [usersNotify, setUserNotify] = useState([]);
 
   // useEffect(() => {
   //   const loadDependences = () => {
@@ -24,6 +25,11 @@ export const ChatProvider = (props) => {
     }
   });
 
+  mySocket.on("message-send-to", (idUser) => {
+    setUserNotify([idUser, ...usersNotify]);
+    console.log(usersNotify);
+  })
+
   mySocket.on("disconnect-user", (idUser) => {
     console.log(idUser);
     const newUsers = onlineUsers.filter((user) => user !== idUser);
@@ -36,7 +42,7 @@ export const ChatProvider = (props) => {
   // }, [users, onlineUsers]);
 
   return (
-    <ChatContext.Provider value={{mySocket, users, setUsers, onlineUsers, setOnlineUsers }}>
+    <ChatContext.Provider value={{mySocket, users, setUsers, onlineUsers, setOnlineUsers, usersNotify, setUserNotify }}>
       {props.children}
     </ChatContext.Provider>
   );

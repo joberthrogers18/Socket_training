@@ -51,7 +51,7 @@ function Chat(props) {
     ];
 
     console.log(roomName);
-    await api.post(`/send-message/${roomName}`, {
+    await api.post(`/send-message/${roomName}?senderId=${user._id}`, {
       messages,
     });
     setMessage("");
