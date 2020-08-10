@@ -12,7 +12,8 @@ import { ChatContext } from "../../utils/context";
 
 
 function ListUsers(props) {
-  const { onlineUsers, users, setUsers, mySocket, usersNotify, setUserNotify } = useContext(ChatContext)
+  const [usersNotify, setUserNotify] = useState([]);
+  const { onlineUsers, users, setUsers, mySocket } = useContext(ChatContext)
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -24,10 +25,15 @@ function ListUsers(props) {
         );
         setUsers(filteredUsers);
       }
+
+      mySocket.on("message-send-to", (idUser) => {
+        setUserNotify([idUser, ...usersNotify]);
+        console.log(usersNotify);
+      })
     };
 
     loadUsers();
-  }, []);
+  }, [usersNotify]);
 
   const chooseUser = (idUser) => {
     const myId = localStorage.getItem('tokenId')
